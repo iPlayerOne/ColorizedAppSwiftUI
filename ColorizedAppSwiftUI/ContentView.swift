@@ -14,6 +14,7 @@ struct ContentView: View {
     @State private var blueValue = Double.random(in: 0...255)
     
     @FocusState private var isActive: Bool
+    @FocusState private var currentField: Field?
     
     var body: some View {
         ZStack(alignment: .top) {
@@ -35,19 +36,34 @@ struct ContentView: View {
                     sliderColor: .red,
                     value: $redValue.animation()
                 )
+                .focused($currentField, equals:.red)
+                
                 SliderLineView(
                     sliderColor: .green,
                     value: $greenValue.animation()
                 )
+                .focused($currentField, equals: .green)
+                
                 SliderLineView(
                     sliderColor: .blue,
                     value: $blueValue.animation()
                 )
+                .focused($currentField, equals: .blue)
             }
             .focused($isActive)
             .keyboardType(.numberPad)
             .toolbar {
                 ToolbarItemGroup(placement: .keyboard) {
+                    Button(
+                        action: { previousField() },
+                        label:{ Image(systemName: "chevron.up") }
+                    )
+                        .disabled(!isPreviousPossible())
+                    Button(
+                        action: { nextField() },
+                        label:{ Image(systemName: "chevron.down") }
+                    )
+                        .disabled(!isNextPossible())
                     Spacer()
                     Button("Done") {
                         isActive = false
@@ -59,7 +75,37 @@ struct ContentView: View {
     }
 }
 
+extension ContentView {
+    enum Field: Int, CaseIterable {
+        case red, green, blue
+    }
+    
+    private func previousField() {
+        currentField = currentField.map {
+            Field(rawValue: $0.rawValue - 1) ?? .red
+        }
+    }
 
+    private func nextField() {
+        currentField = currentField.map {
+            Field(rawValue: $0.rawValue + 1) ?? .green
+        }
+    }
+    
+    private func isPreviousPossible() -> Bool {
+        guard let focusedField = currentField else {
+            return false
+        }
+        return focusedField.rawValue > 0
+    }
+
+    private func isNextPossible() -> Bool {
+        guard let focusedField = currentField else {
+            return false
+        }
+        return focusedField.rawValue < Field.allCases.count - 1
+    }
+}
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
