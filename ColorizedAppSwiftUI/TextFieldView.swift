@@ -9,23 +9,21 @@ import SwiftUI
 
 struct TextFieldView: View {
     
+    @Binding var text: String
     @Binding var value: Double
+    
     @State private var alertPresented = false
     
     var body: some View {
-        TextField(
-            "\(lround(value))",
-            value: $value,
-            formatter: NumberFormatter()
-        ){ _ in
-            checkField()
+        TextField("", text: $text) { _ in
+            withAnimation {
+                checkField()
+            }
         }
+        .frame(width: 55, alignment: .trailing)
         .multilineTextAlignment(.trailing)
-        .font(.system(size: 19))
         .textFieldStyle(.roundedBorder)
-        .background(.white)
-        .frame(width: 50)
-        .foregroundColor(.black)
+        .keyboardType(.decimalPad)
         .alert(
             "Not that fast!",
             isPresented: $alertPresented,
@@ -38,18 +36,18 @@ struct TextFieldView: View {
 
 extension TextFieldView {
     private func checkField() {
-        let approvedRange = 0...255
-        if approvedRange.contains(lround(value)) {
+        if let value = Int(text), (0...255).contains(value) {
+            self.value = Double(value)
             return
-        } else {
-            alertPresented.toggle()
-            value = 255
         }
+        alertPresented.toggle()
+        value = 0
+        text = "0"
     }
 }
 
 struct TextFieldView_Previews: PreviewProvider {
     static var previews: some View {
-        TextFieldView(value: .constant(50))
+        TextFieldView(text: .constant(""), value: .constant(50))
     }
 }

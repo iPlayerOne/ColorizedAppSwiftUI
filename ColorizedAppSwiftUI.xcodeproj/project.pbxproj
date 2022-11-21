@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		300467FE292BDECB004335E9 /* TextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 300467FD292BDECB004335E9 /* TextView.swift */; };
+		30046800292BDF87004335E9 /* ColorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 300467FF292BDF87004335E9 /* ColorView.swift */; };
 		302CA5C528CEF1BD0051AE10 /* ColorizedAppSwiftUIApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 302CA5C428CEF1BD0051AE10 /* ColorizedAppSwiftUIApp.swift */; };
 		302CA5C728CEF1BD0051AE10 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 302CA5C628CEF1BD0051AE10 /* ContentView.swift */; };
 		302CA5C928CEF1C20051AE10 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 302CA5C828CEF1C20051AE10 /* Assets.xcassets */; };
@@ -16,6 +18,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		300467FD292BDECB004335E9 /* TextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextView.swift; sourceTree = "<group>"; };
+		300467FF292BDF87004335E9 /* ColorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorView.swift; sourceTree = "<group>"; };
 		302CA5C128CEF1BD0051AE10 /* ColorizedAppSwiftUI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ColorizedAppSwiftUI.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		302CA5C428CEF1BD0051AE10 /* ColorizedAppSwiftUIApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorizedAppSwiftUIApp.swift; sourceTree = "<group>"; };
 		302CA5C628CEF1BD0051AE10 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -59,6 +63,8 @@
 				302CA5C628CEF1BD0051AE10 /* ContentView.swift */,
 				302CA5D228CEF4210051AE10 /* SliderLineView.swift */,
 				302CA5D428D09A4C0051AE10 /* TextFieldView.swift */,
+				300467FD292BDECB004335E9 /* TextView.swift */,
+				300467FF292BDF87004335E9 /* ColorView.swift */,
 				302CA5C828CEF1C20051AE10 /* Assets.xcassets */,
 				302CA5CA28CEF1C20051AE10 /* Preview Content */,
 			);
@@ -143,10 +149,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				30046800292BDF87004335E9 /* ColorView.swift in Sources */,
 				302CA5C728CEF1BD0051AE10 /* ContentView.swift in Sources */,
 				302CA5D328CEF4210051AE10 /* SliderLineView.swift in Sources */,
 				302CA5D528D09A4D0051AE10 /* TextFieldView.swift in Sources */,
 				302CA5C528CEF1BD0051AE10 /* ColorizedAppSwiftUIApp.swift in Sources */,
+				300467FE292BDECB004335E9 /* TextView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

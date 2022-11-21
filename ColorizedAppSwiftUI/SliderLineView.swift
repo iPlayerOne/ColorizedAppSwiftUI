@@ -9,20 +9,25 @@ import SwiftUI
 
 struct SliderLineView: View {
     
-    let sliderColor: Color
-    
     @Binding var value: Double
+    @State private var text = ""
+    
+    let sliderColor: Color
     
     var body: some View {
         HStack {
-            Text("\(lround(value))")
-                .foregroundColor(sliderColor)
-                .frame(width: 40)
+            TextView(value: value)
             
             Slider(value: $value, in: 0...255, step: 1)
                 .accentColor(sliderColor)
+                .onChange(of: value) { newValue in
+                    text = value.formatted()
+                }
             
-            TextFieldView(value: $value)
+            TextFieldView(text:  $text, value: $value)
+        }
+        .onAppear {
+            text = value.formatted()
         }
         .padding( .horizontal, 12.0)
         
@@ -31,6 +36,6 @@ struct SliderLineView: View {
 
 struct SliderLineView_Previews: PreviewProvider {
     static var previews: some View {
-        SliderLineView(sliderColor: .red, value: .constant(100))
+        SliderLineView(value: .constant(100), sliderColor: .red)
     }
 }

@@ -9,103 +9,87 @@ import SwiftUI
 
 struct ContentView: View {
     
-    @State private var redValue = Double.random(in: 0...255)
-    @State private var greenValue = Double.random(in: 0...255)
-    @State private var blueValue = Double.random(in: 0...255)
+    @State private var redValue = Double.random(in: 0...255).rounded()
+    @State private var greenValue = Double.random(in: 0...255).rounded()
+    @State private var blueValue = Double.random(in: 0...255).rounded()
     
-    @FocusState private var isActive: Bool
     @FocusState private var currentField: Field?
     
     var body: some View {
         ZStack(alignment: .top) {
-            Color.yellow.ignoresSafeArea()
-            
-            VStack {
-                RoundedRectangle(cornerRadius: 20)
-                    .frame(height: 150)
-                    .foregroundColor(
-                        Color(
-                            red: redValue/255,
-                            green: greenValue/255,
-                            blue: blueValue/255
-                        )
-                    )
-                    .padding()
-                
-                SliderLineView(
-                    sliderColor: .red,
-                    value: $redValue.animation()
-                )
-                .focused($currentField, equals:.red)
-                
-                SliderLineView(
-                    sliderColor: .green,
-                    value: $greenValue.animation()
-                )
-                .focused($currentField, equals: .green)
-                
-                SliderLineView(
-                    sliderColor: .blue,
-                    value: $blueValue.animation()
-                )
-                .focused($currentField, equals: .blue)
-            }
-            .focused($isActive)
-            .keyboardType(.numberPad)
-            .toolbar {
-                ToolbarItemGroup(placement: .keyboard) {
-                    Button(
-                        action: { previousField() },
-                        label:{ Image(systemName: "chevron.up") }
-                    )
-                        .disabled(!isPreviousPossible())
-                    Button(
-                        action: { nextField() },
-                        label:{ Image(systemName: "chevron.down") }
-                    )
-                        .disabled(!isNextPossible())
-                    Spacer()
-                    Button("Done") {
-                        isActive = false
-                    }
-                    
+            Color.yellow
+                .ignoresSafeArea()
+                .onTapGesture {
+                    currentField = nil
                 }
+            
+            VStack(spacing: 40) {
+                ColorView(red: redValue, green: greenValue, blue: blueValue)
+                
+                VStack {
+                    SliderLineView(value: $redValue, sliderColor: .red)
+                        .focused($currentField, equals: .red)
+                    SliderLineView(value: $greenValue, sliderColor: .green)
+                        .focused($currentField, equals: .green)
+                    SliderLineView(value: $blueValue, sliderColor: .blue)
+                        .focused($currentField, equals: .blue)
+                }
+                .frame(height: 150)
+                .toolbar {
+                    ToolbarItemGroup(placement: .keyboard) {
+                        Button(action: previousField) {
+                            Image(systemName: "chevron.up")
+                        }
+                        Button(action: nextField) {
+                            Image(systemName: "chevron.down")
+                        }
+                        Spacer()
+                        Button("Done") {
+                            currentField = nil
+                        }
+                    }
+                }
+                Spacer()
             }
+            .padding()
         }
     }
 }
 
 extension ContentView {
-    enum Field: Int, CaseIterable {
-        case red, green, blue
+    private enum Field: Int, CaseIterable {
+        case red
+        case green
+        case blue
     }
     
     private func previousField() {
-        currentField = currentField.map {
-            Field(rawValue: $0.rawValue - 1) ?? .red
-        }
-    }
-
-    private func nextField() {
-        currentField = currentField.map {
-            Field(rawValue: $0.rawValue + 1) ?? .green
+        switch currentField {
+            case .none:
+                currentField = nil
+            case .red:
+                currentField = .red
+            case .green:
+                currentField = .green
+            case .blue:
+                currentField = .blue
         }
     }
     
-    private func isPreviousPossible() -> Bool {
-        guard let focusedField = currentField else {
-            return false
+    private func nextField() {
+        switch currentField {
+            case .none:
+                currentField = nil
+            case .red:
+                currentField = .red
+            case .green:
+                currentField = .green
+            case .blue:
+                currentField = .blue
         }
-        return focusedField.rawValue > 0
-    }
-
-    private func isNextPossible() -> Bool {
-        guard let focusedField = currentField else {
-            return false
-        }
-        return focusedField.rawValue < Field.allCases.count - 1
     }
 }
+
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
