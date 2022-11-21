@@ -24,7 +24,7 @@ struct SliderLineView: View {
                     text = value.formatted()
                 }
             
-            TextFieldView(text:  $text, value: $value)
+            TextFieldView(text: $text, value: $value)
         }
         .onAppear {
             text = value.formatted()
