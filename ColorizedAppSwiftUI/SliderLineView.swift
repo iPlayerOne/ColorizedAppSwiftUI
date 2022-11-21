@@ -29,8 +29,6 @@ struct SliderLineView: View {
         .onAppear {
             text = value.formatted()
         }
-        .padding( .horizontal, 12.0)
-        
     }
 }
 

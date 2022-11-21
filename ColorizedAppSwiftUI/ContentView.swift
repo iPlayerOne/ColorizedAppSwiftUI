@@ -57,7 +57,7 @@ struct ContentView: View {
 }
 
 extension ContentView {
-    private enum Field: Int, CaseIterable {
+    private enum Field {
         case red
         case green
         case blue
@@ -65,27 +65,27 @@ extension ContentView {
     
     private func previousField() {
         switch currentField {
+            case .red:
+                currentField = .green
+            case .green:
+                currentField = .blue
+            case .blue:
+                currentField = .red
             case .none:
                 currentField = nil
-            case .red:
-                currentField = .red
-            case .green:
-                currentField = .green
-            case .blue:
-                currentField = .blue
         }
     }
     
     private func nextField() {
         switch currentField {
+            case .red:
+                currentField = .green
+            case .green:
+                currentField = .blue
+            case .blue:
+                currentField = .red
             case .none:
                 currentField = nil
-            case .red:
-                currentField = .red
-            case .green:
-                currentField = .green
-            case .blue:
-                currentField = .blue
         }
     }
 }
